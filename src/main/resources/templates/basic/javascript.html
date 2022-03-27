@@ -8,11 +8,12 @@
 <!-- 자바스크립트 인라인 사용 전 -->
 <script>
     var username = [[${user.username}]];
-    var age = [[${user.age}]];
+    var age = [[${user.age}]]; // 서버에서 렌더링이 끝내고 10 값을 브라우저에 전달
     //자바스크립트 내추럴 템플릿
     var username2 = /*[[${user.username}]]*/ "test username";
     //객체
     var user = [[${user}]];
+    // 인라인 사용하지 않으면 toString으로 넘어온 데이터
 </script>
 <!-- 자바스크립트 인라인 사용 후 -->
 <script th:inline="javascript">
@@ -23,5 +24,25 @@
     //객체
     var user = [[${user}]];
 </script>
+<!--
+
+자바스크립트 인라인을 사용하지 않으면 자바스크립트에 맞게 데이터가 치환되는게 쉽지 않다.
+하나하나 다 챙겨줘야한다.
+
+내추럴 템플릿을 사용하기 어렵다.
+
+자바스크립트 인라인을 사용하면
+타임리프가 데이터 타입을 맞게 치환해준다.
+네추럴 템플릿을 사용할 수 있게 해준다.
+객체의 경우 JSON으로 넣어준다.
+-->
+
+<!-- 자바스크립트 인라인 each -->
+<script th:inline="javascript">
+  [# th:each="user, stat : ${users}"]
+  var user[[${stat.count}]] = [[${user}]];
+  [/]
+</script>
+
 </body>
 </html>
